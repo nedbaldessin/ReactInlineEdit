@@ -1,10 +1,10 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
@@ -48,6 +48,9 @@ var InlineEdit = function (_React$Component) {
         }, _this.startEditing = function (e) {
             if (_this.props.stopPropagation) {
                 e.stopPropagation();
+            }
+            if (typeof _this.props.onStartEditing === 'function') {
+                _this.props.onStartEditing(_this);
             }
             _this.setState({ editing: true, text: _this.props.text });
         }, _this.finishEditing = function () {
@@ -124,8 +127,8 @@ var InlineEdit = function (_React$Component) {
                     this.state.text || this.props.placeholder
                 );
             } else {
-                var Element = this.props.element || this.props.editingElement;
-                return _react2.default.createElement(Element, {
+                var _Element = this.props.element || this.props.editingElement;
+                return _react2.default.createElement(_Element, {
                     onClick: this.clickWhenEditing,
                     onKeyDown: this.keyDown,
                     onBlur: this.finishEditing,
@@ -153,6 +156,7 @@ InlineEdit.propTypes = {
     minLength: _react2.default.PropTypes.number,
     maxLength: _react2.default.PropTypes.number,
     validate: _react2.default.PropTypes.func,
+    onStartEditing: _react2.default.PropTypes.func,
     style: _react2.default.PropTypes.object,
     editingElement: _react2.default.PropTypes.string,
     staticElement: _react2.default.PropTypes.string,

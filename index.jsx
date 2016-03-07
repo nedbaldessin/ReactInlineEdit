@@ -16,6 +16,7 @@ export default class InlineEdit extends React.Component {
         minLength: React.PropTypes.number,
         maxLength: React.PropTypes.number,
         validate: React.PropTypes.func,
+        onStartEditing: React.PropTypes.func,
         style: React.PropTypes.object,
         editingElement: React.PropTypes.string,
         staticElement: React.PropTypes.string,
@@ -64,6 +65,9 @@ export default class InlineEdit extends React.Component {
     startEditing = (e) => {
         if (this.props.stopPropagation) {
             e.stopPropagation()
+        }
+        if (typeof this.props.onStartEditing === 'function') {
+            this.props.onStartEditing(this);
         }
         this.setState({editing: true, text: this.props.text});
     };
